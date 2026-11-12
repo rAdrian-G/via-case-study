@@ -53,12 +53,12 @@ Após a consulta, os dados são organizados em memória para:
 - Cálculo de indicadores.
 - Geração dos relatórios exportáveis.
 
-## 6. Observação sobre unicidade da matrícula
+## 6. Controle de matrículas duplicadas
 
-Durante a utilização do sistema, foi relatado que a aplicação impedia o registro duplicado de matrículas.
+Durante a operação do VIA, o Firebase recusava tentativas de registro utilizando matrículas já cadastradas, impedindo a persistência de participações duplicadas.
 
-Entretanto, na versão do código analisada, a função de persistência utiliza `addDoc()`, que gera um identificador automático para cada documento. As regras fornecidas também validam a matrícula como campo textual, mas não implementam uma restrição explícita de unicidade.
+Esse comportamento contribuía para a integridade dos registros e para a confiabilidade dos resultados apresentados no painel administrativo.
 
-Portanto, o comportamento observado em operação deve ser distinguido da garantia de unicidade implementada no banco de dados.
+Na revisão do código-fonte disponibilizado, entretanto, não foi localizada a implementação responsável por essa restrição. A função de persistência utiliza `addDoc()`, enquanto as regras de segurança analisadas não apresentam uma verificação explícita de unicidade entre documentos.
 
-Uma implementação futura poderia utilizar uma operação transacional ou uma estrutura de documentos com identificadores determinísticos, acompanhada de regras que impeçam a criação duplicada.
+Assim, o comportamento observado em produção está documentado, mas o mecanismo técnico específico permanece pendente de confirmação.
